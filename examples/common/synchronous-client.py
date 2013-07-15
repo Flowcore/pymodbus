@@ -49,7 +49,6 @@ log.setLevel(logging.DEBUG)
 #
 # * retries - Specify how many retries to allow per transaction (default = 3)
 # * retry_on_empty - Is an empty response a retry (default = False)
-# * source_address - Specifies the TCP source address to bind to
 #
 # Here is an example of using these options::
 #
