@@ -39,7 +39,7 @@ log.setLevel(logging.DEBUG)
 # to use a custom implementation (say RTU over TCP). By default they use the
 # socket framer::
 #
-#    client = ModbusClient('localhost', port=5020, framer=ModbusRtuFramer)
+#    client = ModbusClient('localhost', port=502, framer=ModbusRtuFramer)
 #
 # It should be noted that you can supply an ipv4 or an ipv6 host address for
 # both the UDP and TCP clients.
@@ -55,7 +55,7 @@ log.setLevel(logging.DEBUG)
 #
 #    client = ModbusClient('localhost', retries=3, retry_on_empty=True)
 #---------------------------------------------------------------------------# 
-client = ModbusClient('localhost', port=502)
+client = ModbusClient('localhost', port=5020)
 #client = ModbusClient(method='ascii', port='/dev/pts/2', timeout=1)
 #client = ModbusClient(method='rtu', port='/dev/pts/2', timeout=1)
 client.connect()
