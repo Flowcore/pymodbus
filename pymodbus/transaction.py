@@ -68,7 +68,7 @@ class ModbusTransactionManager(object):
                 if not self.handle_message_framing():
                     raise ModbusIOException("Server responded with bad response")
                 break
-            except socket.error, msg:
+            except socket.error as msg:
                 self.client.close()
                 _logger.debug("Transaction failed. (%s) " % msg)
                 retries -= 1
@@ -331,7 +331,7 @@ class ModbusSocketFramer(IModbusFramer):
 
         :param decoder: The decoder factory implementation to use
         '''
-        self._buffer = ''
+        self._buffer = b''
         self._header = {'tid':0, 'pid':0, 'len':0, 'uid':0}
         self._hsize  = 0x07
         self.decoder = decoder
@@ -472,7 +472,7 @@ class ModbusRtuFramer(IModbusFramer):
 
         :param decoder: The decoder factory implementation to use
         '''
-        self._buffer = ''
+        self._buffer = b''
         self._header = {'lrc':'0000', 'len':0, 'uid':0x00}
         self._hsize  = 0x01
         self._end    = '\x0d\x0a'
@@ -514,7 +514,7 @@ class ModbusRtuFramer(IModbusFramer):
         end of the message (python just doesn't have the resolution to
         check for millisecond delays).
         '''
-        self._buffer = ''
+        self._buffer = b''
         self._header = {'lrc':'0000', 'len':0, 'uid':0x00}
 
     def isFrameReady(self):
@@ -570,7 +570,7 @@ class ModbusRtuFramer(IModbusFramer):
         end    = self._header['len'] - 2
         buffer = self._buffer[start:end]
         if end > 0: return buffer
-        return ''
+        return b''
 
     def populateResult(self, result):
         ''' Populates the modbus result header
@@ -622,11 +622,11 @@ class ModbusAsciiFramer(IModbusFramer):
 
         :param decoder: The decoder implementation to use
         '''
-        self._buffer = ''
+        self._buffer = b''
         self._header = {'lrc':'0000', 'len':0, 'uid':0x00}
         self._hsize  = 0x02
-        self._start  = ':'
-        self._end    = "\r\n"
+        self._start  = b':'
+        self._end    = b"\r\n"
         self.decoder = decoder
 
     #-----------------------------------------------------------------------#
@@ -768,11 +768,11 @@ class ModbusBinaryFramer(IModbusFramer):
 
         :param decoder: The decoder implementation to use
         '''
-        self._buffer = ''
+        self._buffer = b''
         self._header = {'crc':0x0000, 'len':0, 'uid':0x00}
         self._hsize  = 0x02
-        self._start  = '\x7b'  # {
-        self._end    = '\x7d'  # }
+        self._start  = b'\x7b'  # {
+        self._end    = b'\x7d'  # }
         self._repeat = [b'}'[0], b'{'[0]] # python3 hack
         self.decoder = decoder
 
