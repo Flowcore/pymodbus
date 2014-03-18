@@ -871,7 +871,7 @@ class ModbusBinaryFramer(IModbusFramer):
             message.unit_id,
             message.function_code) + data
         packet += struct.pack(">H", computeCRC(packet))
-        packet = '%s%s%s' % (self._start, packet, self._end)
+        packet  = self._start + packet + self._end
         return packet
 
     def _preflight(self, data):
